@@ -1,6 +1,6 @@
 # Roblox-2020-Api-Server
 Recreation of Roblox website 2020 with api
-#RUN SERVER
+# RUN SERVER
 python server.py
-#SETTINGS
+# SETTINGS
 To change data in Marketplace or other settings, you can make changes to server.py
