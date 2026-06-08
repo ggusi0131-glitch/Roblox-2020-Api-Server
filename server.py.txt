@@ -1,0 +1,131 @@
+from flask import Flask, render_template, jsonify
+
+app = Flask(__name__, template_folder="pages")
+
+@app.route("/home")
+def home():
+  username = "Admin"
+  displayname = "Admin"
+  userid = 2
+  return render_template("home.html",username=username,displayname=displayname,userid=userid)
+
+@app.route("/api/v1/privatemessages.roblox.com/v1/messages/unread/count")
+def new_messages():
+  return '{"count": 1}'
+
+@app.route("/my/messages")
+def messages():
+  username = "Admin"
+  displayname = "Admin"
+  userid = 2
+  return render_template("messages.html",username=username,displayname=displayname,userid=userid)
+
+@app.route("/api/v1/privatemessages.roblox.com/v1/messages")
+def message_details():
+  return jsonify({
+"previousPageCursor": None,
+        "nextPageCursor": None,
+        "collection": [
+            {
+                "id": 1,
+                "sender": {
+                    "id": 1,
+                    "name": "Roblox",
+                    "displayName": "Roblox"
+                },
+                "recipient": {
+                    "id": 2,
+                    "name": "Admin",
+                    "displayName": "Admin"
+                },
+                "subject": "Test Message",
+                "body": "Test Message",
+                "created": "2036-06-07T22:40:00Z",
+                "isRead": False,
+                "isArchived": False
+            }
+        ]
+    })
+
+@app.route("/catalog")
+def catalog():
+  username = "Admin"
+  displayname = "Admin"
+  userid = 2
+  return render_template("catalog.html",username=username,displayname=displayname,userid=userid)
+
+@app.route("/api/v1/catalog/v1/search/items")
+def display_items():
+  return jsonify({
+  "keyword": None,
+  "previousPageCursor": None,
+  "nextPageCursor": None,
+  "data": [
+    {
+      "id": 1,
+      "itemType": "Asset"
+    }
+  ]
+})
+  
+@app.route("/api/v1/catalog/v1/catalog/items/details", methods = ['POST'])
+def items_catalog():
+  return jsonify({
+        "data":[
+  {
+  "id": 1,
+  "itemType": "Asset",
+  "assetType": 8,
+  "name": "Test",
+  "description": None,
+  "productId": 1,
+  "genres": ["All"],
+  "itemStatus": [""], #["Sale"] ["New"]
+  "itemRestrictions": ["LimitedUnique"], #["Limited"]
+  "creatorType": "User", # "Group"
+  "creatorTargetId": 1,
+  "creatorName": "Roblox",
+  "price": 100,
+  "favoriteCount": 0,
+  "offSaleDeadline": None,
+  "rescaleCount": 0,
+  "totalQuantity": 0,
+  "remainingQuantity": 0
+    }
+  ]
+})
+
+@app.route("/api/v1/catalog/v1/search/navigation-menu-items")
+def categories_catalog():
+  return '{"defaultGearSubcategory":5,"defaultCategory":15,"defaultCategoryIdForRecommendedSearch":0,"defaultCreator":0,"defaultCurrency":0,"defaultSortType":0,"defaultSortAggregation":5,"categoriesWithCreator":[1,3,13],"robloxUserId":1,"robloxUserName":"Roblox","gearSubcategory":5,"allCategories":1,"freeFilter":5,"customRobuxFilter":3,"robuxFilter":1,"categories":[{"category":"Recommended","categoryId":15,"name":"Recommended","orderIndex":1,"subcategories":[],"isSearchable":false},{"category":"All","categoryId":1,"name":"All Categories","orderIndex":2,"subcategories":[],"isSearchable":true},{"category":"Featured","categoryId":0,"name":"Featured","orderIndex":3,"subcategories":[{"subcategory":"Featured","subcategoryId":0,"name":"All Featured Items","shortName":"All"},{"subcategory":"Accessories","subcategoryId":19,"name":"Featured Accessories","shortName":"Accessories"},{"subcategory":"AnimationBundles","subcategoryId":38,"name":"Featured Animations","shortName":"Animations"},{"subcategory":"Faces","subcategoryId":10,"name":"Featured Faces","shortName":"Faces"},{"subcategory":"Gear","subcategoryId":5,"name":"Featured Gear","shortName":"Gear"},{"subcategory":"AllBundles","subcategoryId":53,"name":"Featured Bundles","shortName":"Bundles"},{"subcategory":"EmoteAnimations","subcategoryId":39,"name":"Featured Emotes","shortName":"Emotes"}],"isSearchable":true},{"category":"CommunityCreations","categoryId":13,"name":" Community Creations","orderIndex":4,"subcategories":[{"subcategory":"CommunityCreations","subcategoryId":40,"name":"All Creations","shortName":null},{"subcategory":"HeadAccessories","subcategoryId":54,"name":"Head","shortName":null},{"subcategory":"HairAccessories","subcategoryId":20,"name":"Hair","shortName":null},{"subcategory":"FaceAccessories","subcategoryId":21,"name":"Face","shortName":null},{"subcategory":"NeckAccessories","subcategoryId":22,"name":"Neck","shortName":null},{"subcategory":"ShoulderAccessories","subcategoryId":23,"name":"Shoulder","shortName":null},{"subcategory":"FrontAccessories","subcategoryId":24,"name":"Front","shortName":null},{"subcategory":"BackAccessories","subcategoryId":25,"name":"Back","shortName":null},{"subcategory":"WaistAccessories","subcategoryId":26,"name":"Waist","shortName":null}],"isSearchable":true},{"category":"Premium","categoryId":14,"name":"Premium","orderIndex":5,"subcategories":[{"subcategory":"Premium","subcategoryId":50,"name":"All Premium Items","shortName":null},{"subcategory":"HeadAccessories","subcategoryId":54,"name":"Head","shortName":null},{"subcategory":"HairAccessories","subcategoryId":20,"name":"Hair","shortName":null},{"subcategory":"FaceAccessories","subcategoryId":21,"name":"Face","shortName":null},{"subcategory":"NeckAccessories","subcategoryId":22,"name":"Neck","shortName":null},{"subcategory":"ShoulderAccessories","subcategoryId":23,"name":"Shoulder","shortName":null},{"subcategory":"FrontAccessories","subcategoryId":24,"name":"Front","shortName":null},{"subcategory":"BackAccessories","subcategoryId":25,"name":"Back","shortName":null},{"subcategory":"WaistAccessories","subcategoryId":26,"name":"Waist","shortName":null}],"isSearchable":true},{"category":"Collectibles","categoryId":2,"name":"Collectibles","orderIndex":6,"subcategories":[{"subcategory":"Collectibles","subcategoryId":2,"name":"All Collectibles","shortName":"All"},{"subcategory":"Accessories","subcategoryId":19,"name":"Collectible Accessories","shortName":"Accessories"},{"subcategory":"Faces","subcategoryId":10,"name":"Collectible Faces","shortName":"Faces"},{"subcategory":"Gear","subcategoryId":5,"name":"Collectible Gear","shortName":"Gear"}],"isSearchable":true},{"category":"Characters","categoryId":17,"name":"Characters","orderIndex":7,"subcategories":[],"isSearchable":true},{"category":"Clothing","categoryId":3,"name":"Clothing","orderIndex":8,"subcategories":[{"subcategory":"Clothing","subcategoryId":3,"name":"All Clothing","shortName":"All"},{"subcategory":"JacketAccessories","subcategoryId":61,"name":"Jackets","shortName":null},{"subcategory":"ClassicShirts","subcategoryId":56,"name":"Classic Shirts","shortName":null},{"subcategory":"ClassicTShirts","subcategoryId":55,"name":"Classic T-Shirts","shortName":null},{"subcategory":"ClassicPants","subcategoryId":57,"name":"Classic Pants","shortName":null}],"isSearchable":true},{"category":"Accessories","categoryId":11,"name":"Accessories","orderIndex":9,"subcategories":[{"subcategory":"Accessories","subcategoryId":19,"name":"All Accessories","shortName":"All"},{"subcategory":"HeadAccessories","subcategoryId":54,"name":"Head","shortName":null},{"subcategory":"FaceAccessories","subcategoryId":21,"name":"Face","shortName":null},{"subcategory":"NeckAccessories","subcategoryId":22,"name":"Neck","shortName":null},{"subcategory":"ShoulderAccessories","subcategoryId":23,"name":"Shoulder","shortName":null},{"subcategory":"FrontAccessories","subcategoryId":24,"name":"Front","shortName":null},{"subcategory":"BackAccessories","subcategoryId":25,"name":"Back","shortName":null},{"subcategory":"WaistAccessories","subcategoryId":26,"name":"Waist","shortName":null},{"subcategory":"Gear","subcategoryId":5,"name":"Gear","shortName":null}],"isSearchable":true},{"category":"BodyParts","categoryId":4,"name":"Body Parts","orderIndex":10,"subcategories":[{"subcategory":"BodyParts","subcategoryId":4,"name":"All Body Parts","shortName":"All"},{"subcategory":"HairAccessories","subcategoryId":20,"name":"Hair","shortName":null},{"subcategory":"Heads","subcategoryId":15,"name":"Heads","shortName":null},{"subcategory":"Faces","subcategoryId":10,"name":"Faces","shortName":null}],"isSearchable":true},{"category":"AvatarAnimations","categoryId":12,"name":"Avatar Animations","orderIndex":11,"subcategories":[{"subcategory":"AvatarAnimations","subcategoryId":27,"name":"All Animations","shortName":null},{"subcategory":"AnimationBundles","subcategoryId":38,"name":"Bundles","shortName":null},{"subcategory":"EmoteAnimations","subcategoryId":39,"name":"Emotes","shortName":null}],"isSearchable":true}],"genres":[{"genre":13,"name":"Building","isSelected":false},{"genre":5,"name":"Horror","isSelected":false},{"genre":1,"name":"Town and City","isSelected":false},{"genre":11,"name":"Military","isSelected":false},{"genre":9,"name":"Comedy","isSelected":false},{"genre":2,"name":"Medieval","isSelected":false},{"genre":7,"name":"Adventure","isSelected":false},{"genre":3,"name":"Sci-Fi","isSelected":false},{"genre":6,"name":"Naval","isSelected":false},{"genre":14,"name":"FPS","isSelected":false},{"genre":15,"name":"RPG","isSelected":false},{"genre":8,"name":"Sports","isSelected":false},{"genre":4,"name":"Fighting","isSelected":false},{"genre":10,"name":"Western","isSelected":false}],"sortMenu":{"sortOptions":[{"sortType":0,"sortOrder":2,"name":"Relevance","isSelected":false,"hasSubMenu":false,"isPriceRelated":false},{"sortType":1,"sortOrder":2,"name":"Most Favorited","isSelected":false,"hasSubMenu":true,"isPriceRelated":false},{"sortType":2,"sortOrder":2,"name":"Bestselling","isSelected":false,"hasSubMenu":true,"isPriceRelated":false},{"sortType":3,"sortOrder":2,"name":"Recently Updated","isSelected":false,"hasSubMenu":false,"isPriceRelated":false},{"sortType":5,"sortOrder":2,"name":"Price (High to Low)","isSelected":false,"hasSubMenu":false,"isPriceRelated":true},{"sortType":4,"sortOrder":1,"name":"Price (Low to High)","isSelected":false,"hasSubMenu":false,"isPriceRelated":true}],"sortAggregations":[{"sortAggregation":5,"name":"All Time","isSelected":false,"hasSubMenu":false,"isPriceRelated":false},{"sortAggregation":3,"name":"Past Week","isSelected":false,"hasSubMenu":false,"isPriceRelated":false},{"sortAggregation":1,"name":"Past Day","isSelected":false,"hasSubMenu":false,"isPriceRelated":false}]},"creatorFilters":[{"userId":0,"name":"All Creators","isSelected":false},{"userId":1,"name":"Roblox","isSelected":false}],"priceFilters":[{"currencyType":0,"name":"Any Price","excludePriceSorts":false},{"currencyType":3,"name":"R$?","excludePriceSorts":false},{"currencyType":5,"name":"Free","excludePriceSorts":true}]}'
+  
+@app.route("/users/<int:userid>/profile")
+def user_profile(userid):
+  username = "Admin"
+  displayname = "Admin"
+  userid = 2
+  return render_template("profile.html",username=username, displayname=displayname,userid=userid,profilename=username, profiledisplay=displayname,profileid=userid, profilefollowing=0,profilefollowers=0)
+
+@app.route("/api/v1/avatar/v1/users/<int:userid>/currently-wearing")
+def user_wearning(userid):
+  return jsonify([
+    'AssetsId: [1]'
+  ])
+  
+@app.route("/api/v1/accountinformation/v1/users/<int:userid>/roblox-badges")
+def badges_user(userid):
+  return jsonify([
+    {
+            "id": 1,
+            "name": "Administrator"
+        }
+  ])
+
+@app.route("/api/v1/economy/v1/users/<int:userid>/currency")
+def robux_user(userid):
+  return jsonify ({
+    "robux": 10000
+  })
+
+if __name__ == "__main__":
+  app.run()
